@@ -11,7 +11,7 @@ with open(proxy_file_name, 'r') as file:
     proxy_http = ''.join(file.readlines()).strip().split('\n')
 
 with open('useragent', 'r') as useragent:
-    userag = ''.join(file.readlines()).strip().split('\n')
+    userag = ''.join(useragent.readlines()).strip().split('\n')
 
 def attack_1(url, proxy, headers):
     cf = cfscrape.CloudflareScraper()
